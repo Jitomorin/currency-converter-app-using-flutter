@@ -1,4 +1,5 @@
 import 'package:currency_converter/screens/home_screen.dart';
+import 'package:currency_converter/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
@@ -18,8 +19,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Currency converter',
         theme: ThemeData(
+          backgroundColor: mainCLight,
           textTheme: GoogleFonts.senTextTheme(),
-          primarySwatch: Colors.blue,
+        ),
+        darkTheme: ThemeData(
+          backgroundColor: mainCDark,
+          textTheme: GoogleFonts.senTextTheme(),
         ),
         home: const HomeScreen(),
       );

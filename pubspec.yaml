@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   http: ^0.13.4
+  dropdown_button2: ^1.5.2
   sizer: ^2.0.15
   basic_utils: ^4.2.2
   carousel_slider: ^4.1.1
@@ -61,6 +62,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/
+    - assets/JSONs/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
