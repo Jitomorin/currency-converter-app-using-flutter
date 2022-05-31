@@ -5,6 +5,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:currency_converter/APIcalls/api_functions.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:sizer/sizer.dart';
 
 import '../utilities/utilities.dart';
@@ -19,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String baseCurrencyValue = 'USD';
   String selectedCurrencyValue = 'EUR';
+  NumberFormat numberFormat = NumberFormat("#,##0.00", "en_US");
   TextEditingController amountTEC = TextEditingController();
   double convertedValue = 0.00;
   late var ratesData;
@@ -136,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textAlign: TextAlign.right,
                       showCursor: false,
                       style: const TextStyle(
-                        fontSize: 40,
+                        fontSize: 70,
                         color: Colors.white,
                       ),
                       enableInteractiveSelection: false,
@@ -153,12 +156,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )),
                   ),
-                  Row(
+                  /* Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      converterButton('Convert'),
+                      _button('Convert'),
+                      _button('convert'),
                     ],
-                  ),
+                  ), */
                 ],
               ),
             ),
@@ -218,12 +222,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        convertedValue.toString(),
+                        numberFormat.format(convertedValue).toString(),
                         textAlign: TextAlign.right,
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 50),
+                            const TextStyle(color: Colors.white, fontSize: 75),
                       ),
                     ),
+                  ),
+                  NumericKeyboard(
+                    onKeyboardTap: _onKeyboardTap,
+                    textColor: babyBlueEyes,
+                    rightButtonFn: () {
+                      setState(() {
+                        amountTEC.text = amountTEC.text
+                            .substring(0, amountTEC.text.length - 1);
+                      });
+                    },
+                    rightIcon: const Icon(
+                      Icons.backspace,
+                      color: babyBlueEyes,
+                    ),
+                    leftButtonFn: () async {
+                      await getSpecificCurrency();
+                    },
+                    leftIcon: const Icon(
+                      Icons.check,
+                      color: babyBlueEyes,
+                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   )
                 ],
               ),
@@ -234,22 +260,33 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  converterButton(String text) {
+  _onKeyboardTap(String value) {
+    setState(() {
+      amountTEC.text = amountTEC.text + value;
+    });
+  }
+
+  getSpecificCurrency() async {
+    convertedValue = await convertCurrencies();
+    setState(() {});
+  }
+
+  _button(String text) {
     return GestureDetector(
       onTap: () async {
-        convertedValue = await convertCurrencies();
-        setState(() {});
+        await getSpecificCurrency();
       },
       child: Container(
         decoration: const BoxDecoration(
             color: salmonPink,
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        height: 10.h,
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        height: 7.h,
         width: 30.w,
         child: Center(
             child: Text(
           text,
-          style: const TextStyle(color: navyBlue, fontWeight: FontWeight.bold),
+          style:
+              const TextStyle(color: babyBlueEyes, fontWeight: FontWeight.bold),
         )),
       ),
     );

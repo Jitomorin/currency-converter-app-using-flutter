@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   http: ^0.13.4
+  intl: ^0.17.0
+  numeric_keyboard: ^1.1.0
   dropdown_button2: ^1.5.2
   sizer: ^2.0.15
   basic_utils: ^4.2.2

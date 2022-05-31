@@ -34,7 +34,6 @@ class APIFunctions {
 
   fetchCurrencyList(String baseCurrency, String? selectedCurrency) async {
     //https://api.freecurrencyapi.com/v1/latest?apikey=TVh9rqImuanSAmjfY35O3ftIQGG7ii0eaHCjrkov&currencies=&base_currency=AUD
-    //https://api.freecurrencyapi.com/v1/currencies?apikey=TVh9rqImuanSAmjfY35O3ftIQGG7ii0eaHCjrkov
     Map<String, String> queryParams = {
       'apikey': APIKey,
       'base_currency': baseCurrency,
@@ -42,7 +41,7 @@ class APIFunctions {
     };
     String queryString = Uri(queryParameters: queryParams).query;
 
-    var requestUrl = '$endpointURL?$queryString';
+    /* var requestUrl = '$endpointURL?$queryString'; */
     var response = await http
         .get(Uri.https('api.freecurrencyapi.com', '/v1/latest', queryParams));
 
