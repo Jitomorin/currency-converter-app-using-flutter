@@ -243,7 +243,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: babyBlueEyes,
                     ),
                     leftButtonFn: () async {
-                      await getSpecificCurrency();
+                      if (amountTEC.text == '') {
+                        setState(() {
+                          convertedValue = 0.00;
+                        });
+                      } else {
+                        await getSpecificCurrency();
+                      }
                     },
                     leftIcon: const Icon(
                       Icons.check,
